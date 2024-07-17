@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "allowSyntheticDefaultImports": true
   }
 }
