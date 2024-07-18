@@ -1,4 +1,4 @@
-# TO use environment variable use ${variable_name}
+# TO use environment variable use $\{variable_name\}
 
 application:
   port: application_port

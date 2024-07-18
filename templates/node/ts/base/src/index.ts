@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import { appConfig } from './config/config';
+import { appRouter } from './app-router';
 
 const bootstrap = async () => {
   const app = express();
@@ -15,6 +16,8 @@ const bootstrap = async () => {
 
   // Reducing fingerprinting
   app.disable('x-powered-by');
+
+  app.use(appRouter);
 
   app.listen(port, () => {
     console.log(`🚀 Application running on port: ${port}`);
