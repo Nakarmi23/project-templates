@@ -8,6 +8,7 @@ export default function (/** @type {import('plop').NodePlopAPI} */ plop) {
       },
       {
         type: 'checkbox',
+        message: 'What files do you want to generate?',
         name: 'fileToGenerate',
         choices: [
           {
