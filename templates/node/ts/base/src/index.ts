@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import { appConfig } from './config/config';
 import { appRouter } from './app-router';
+import compression from 'compression';
 
 const bootstrap = async () => {
   const app = express();
@@ -16,6 +17,20 @@ const bootstrap = async () => {
 
   // Reducing fingerprinting
   app.disable('x-powered-by');
+
+  app.use(
+    compression({
+      filter(req, res) {
+        if (req.headers['x-no-compression']) {
+          // don't compress responses with this request header
+          return false;
+        }
+
+        // fallback to standard filter function
+        return compression.filter(req, res);
+      },
+    })
+  );
 
   app.use(appRouter);
 
