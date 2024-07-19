@@ -18,8 +18,11 @@ const bootstrap = async () => {
   // Reducing fingerprinting
   app.disable('x-powered-by');
 
+  // Compressing responses larger than 2 KB
   app.use(
     compression({
+      // Don't compress response under 2 KB
+      threshold: 2048,
       filter(req, res) {
         if (req.headers['x-no-compression']) {
           // don't compress responses with this request header
