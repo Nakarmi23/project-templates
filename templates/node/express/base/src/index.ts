@@ -34,7 +34,7 @@ const bootstrap = () => {
         // fallback to standard filter function
         return compression.filter(req, res);
       },
-    })
+    }),
   );
 
   app.use(appEndpointLogger);

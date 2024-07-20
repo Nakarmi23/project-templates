@@ -36,7 +36,7 @@ export default function (/** @type {import('plop').NodePlopAPI} */ plop) {
           destination: 'src/features/{{dashCase name}}',
           base: 'plop-templates/feature-templates',
           templateFiles: `plop-templates/feature-templates/*.(${answers.fileToGenerate.join(
-            '|'
+            '|',
           )}).ts.hbs`,
         },
       ];
@@ -56,7 +56,7 @@ export default function (/** @type {import('plop').NodePlopAPI} */ plop) {
             pattern: /(\/\/ \* inject feature\/resource routers below)/g,
             template:
               "$1\nrouter.use('{{dashCase name}}',{{camelCase name}}Router);",
-          }
+          },
         );
 
       return actions;

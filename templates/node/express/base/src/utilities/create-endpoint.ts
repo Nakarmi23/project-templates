@@ -5,7 +5,7 @@ import { BadRequestError } from './custom-errors';
 interface EndpointSchemas<
   TParam extends z.ZodType = never,
   TBody extends z.ZodType = never,
-  TQuery extends z.ZodType = never
+  TQuery extends z.ZodType = never,
 > {
   param?: TParam;
   body?: TBody;
@@ -16,9 +16,9 @@ export const createRouteHandler =
   <
     TParam extends z.ZodType = never,
     TBody extends z.ZodType = never,
-    TQuery extends z.ZodType = never
+    TQuery extends z.ZodType = never,
   >(
-    schemas: EndpointSchemas<TParam, TBody, TQuery> | null = null
+    schemas: EndpointSchemas<TParam, TBody, TQuery> | null = null,
   ) =>
   (
     callback: RequestHandler<
@@ -26,7 +26,7 @@ export const createRouteHandler =
       unknown,
       z.infer<TBody>,
       z.infer<TQuery>
-    >
+    >,
   ) =>
   (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -37,7 +37,7 @@ export const createRouteHandler =
           if (!param.success)
             throw new BadRequestError(
               'Invalid parameters detected',
-              param.error.issues
+              param.error.issues,
             );
 
           req.params = param.data as never;
@@ -49,7 +49,7 @@ export const createRouteHandler =
           if (!query.success)
             throw new BadRequestError(
               'Invalid query detected',
-              query.error.issues
+              query.error.issues,
             );
 
           req.query = query.data as never;
@@ -61,7 +61,7 @@ export const createRouteHandler =
           if (!body.success)
             throw new BadRequestError(
               'Invalid body detected',
-              body.error.issues
+              body.error.issues,
             );
 
           req.body = body.data as never;

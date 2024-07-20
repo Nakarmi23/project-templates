@@ -4,7 +4,7 @@ import { logger } from '../utilities/logger';
 export const appEndpointLogger = (
   req: Request,
   _res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   logger.info(`${req.method} ${req.originalUrl}: Received request`);
   next();

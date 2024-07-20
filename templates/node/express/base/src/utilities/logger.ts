@@ -36,13 +36,13 @@ const consoleFormat = winston.format.printf(
 
     if (!lodash.isEmpty(rawPayload))
       payload = chalk.gray(
-        JSON.stringify(rawPayload, null, 2).replace(/\\n/g, '\n')
+        JSON.stringify(rawPayload, null, 2).replace(/\\n/g, '\n'),
       );
 
     return `[${chalk.gray(timestamp)}] ${level}: ${
       message as string
     } ${payload}`;
-  }
+  },
 );
 
 const fileFormat = winston.format.printf(
@@ -52,7 +52,7 @@ const fileFormat = winston.format.printf(
       payload = JSON.stringify(p, null, 2).replace(/\\n/g, '\n');
 
     return `[${timestamp as string}] ${level}: ${message as string} ${payload}`;
-  }
+  },
 );
 
 export const logger = winston.createLogger({
@@ -61,7 +61,7 @@ export const logger = winston.createLogger({
       format: 'YYYY-MM-DD hh:mm:ss.SSS A',
     }),
     winston.format.splat(),
-    consoleFormat
+    consoleFormat,
   ),
   transports: [
     new winston.transports.Console({ level: 'debug' }),
@@ -77,7 +77,7 @@ export const logger = winston.createLogger({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),
         winston.format.splat(),
-        fileFormat
+        fileFormat,
       ),
     }),
   ],
