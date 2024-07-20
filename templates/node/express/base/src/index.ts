@@ -3,6 +3,8 @@ import helmet from 'helmet';
 import { appConfig } from './config/config';
 import { appRouter } from './app-router';
 import compression from 'compression';
+import { logger } from './utilities/logger';
+import { appEndpointLogger } from './middleware/app-endpoint-logger';
 
 const bootstrap = async () => {
   const app = express();
@@ -35,10 +37,13 @@ const bootstrap = async () => {
     })
   );
 
+  app.use(appEndpointLogger);
+
+  logger.info(`Initializing application routes`);
   app.use(appRouter);
 
   app.listen(port, () => {
-    console.log(`🚀 Application running on port: ${port}`);
+    logger.info(`🚀 Application running on port: ${port}`);
   });
 };
 

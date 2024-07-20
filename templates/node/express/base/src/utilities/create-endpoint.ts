@@ -12,7 +12,7 @@ type EndpointSchemas<
   query?: TQuery;
 };
 
-export const createEndpoint =
+export const createRouteHandler =
   <
     TParam extends z.ZodType = any,
     TBody extends z.ZodType = any,
