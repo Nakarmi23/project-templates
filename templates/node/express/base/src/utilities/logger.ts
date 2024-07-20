@@ -2,12 +2,12 @@ import path from 'path';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 import chalk from 'chalk';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 chalk.level = 3;
 
 const consoleFormat = winston.format.printf(
-  ({ level, message, timestamp, payload: p }) => {
+  ({ level, message, timestamp, payload: rawPayload }) => {
     const levelUpper = level.toUpperCase();
     let payload = '';
     switch (levelUpper) {
@@ -34,20 +34,24 @@ const consoleFormat = winston.format.printf(
         break;
     }
 
-    if (!_.isEmpty(p))
-      payload = chalk.gray(JSON.stringify(p, null, 2).replace(/\\n/g, '\n'));
+    if (!lodash.isEmpty(rawPayload))
+      payload = chalk.gray(
+        JSON.stringify(rawPayload, null, 2).replace(/\\n/g, '\n')
+      );
 
-    return `[${chalk.gray(timestamp)}] ${level}: ${message} ${payload}`;
+    return `[${chalk.gray(timestamp)}] ${level}: ${
+      message as string
+    } ${payload}`;
   }
 );
 
 const fileFormat = winston.format.printf(
   ({ level, message, timestamp, payload: p }) => {
     let payload = '';
-    if (!_.isEmpty(p))
+    if (!lodash.isEmpty(p))
       payload = JSON.stringify(p, null, 2).replace(/\\n/g, '\n');
 
-    return `[${timestamp}] ${level}: ${message} ${payload}`;
+    return `[${timestamp as string}] ${level}: ${message as string} ${payload}`;
   }
 );
 

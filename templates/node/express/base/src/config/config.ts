@@ -8,7 +8,7 @@ dotenv.config();
 
 // replace ${names} with environment variable values
 const substituteEnvVars = (str: string) => {
-  return str.replace(/\${([^}]+)}/g, (_, name) => {
+  return str.replace(/\${([^}]+)}/g, (_matches, name: string) => {
     const value = process.env[name];
     if (!value) {
       throw new Error(`"${name}" does not exists in the environment variable`);

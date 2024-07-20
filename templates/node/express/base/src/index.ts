@@ -6,7 +6,7 @@ import compression from 'compression';
 import { logger } from './utilities/logger';
 import { appEndpointLogger } from './middleware/app-endpoint-logger';
 
-const bootstrap = async () => {
+const bootstrap = () => {
   const app = express();
 
   const port = appConfig.application.port || 3000;
@@ -43,7 +43,9 @@ const bootstrap = async () => {
   app.use(appRouter);
 
   app.listen(port, () => {
-    logger.info(`🚀 Application running on port: ${port}`);
+    logger.info(`🚀 Application running on port: ${port.toString()}`, {
+      test: 'test',
+    });
   });
 };
 

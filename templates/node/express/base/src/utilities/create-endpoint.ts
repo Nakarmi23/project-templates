@@ -2,28 +2,28 @@ import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
 import { BadRequestError } from './custom-errors';
 
-type EndpointSchemas<
-  TParam extends z.ZodType = any,
-  TBody extends z.ZodType = any,
-  TQuery extends z.ZodType = any
-> = {
+interface EndpointSchemas<
+  TParam extends z.ZodType = never,
+  TBody extends z.ZodType = never,
+  TQuery extends z.ZodType = never
+> {
   param?: TParam;
   body?: TBody;
   query?: TQuery;
-};
+}
 
 export const createRouteHandler =
   <
-    TParam extends z.ZodType = any,
-    TBody extends z.ZodType = any,
-    TQuery extends z.ZodType = any
+    TParam extends z.ZodType = never,
+    TBody extends z.ZodType = never,
+    TQuery extends z.ZodType = never
   >(
     schemas: EndpointSchemas<TParam, TBody, TQuery> | null = null
   ) =>
   (
     callback: RequestHandler<
       z.infer<TParam>,
-      any,
+      unknown,
       z.infer<TBody>,
       z.infer<TQuery>
     >
@@ -68,7 +68,7 @@ export const createRouteHandler =
         }
       }
 
-      return callback(req as never, res, next);
+      callback(req as never, res, next);
     } catch (error) {
       next(error);
     }
