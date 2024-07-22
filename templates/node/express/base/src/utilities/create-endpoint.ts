@@ -1,4 +1,4 @@
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
 import { BadRequestError } from './custom-errors';
 
@@ -21,14 +21,13 @@ export const createRouteHandler =
     schemas: EndpointSchemas<TParam, TBody, TQuery> | null = null,
   ) =>
   (
-    callback: RequestHandler<
-      z.infer<TParam>,
-      unknown,
-      z.infer<TBody>,
-      z.infer<TQuery>
-    >,
+    callback: (
+      req: Request<z.infer<TParam>, z.infer<TBody>, z.infer<TQuery>>,
+      res: Response,
+      next: NextFunction,
+    ) => Promise<void> | void,
   ) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (schemas) {
         if (schemas.param) {
@@ -68,7 +67,7 @@ export const createRouteHandler =
         }
       }
 
-      callback(req as never, res, next);
+      await callback(req as never, res, next);
     } catch (error) {
       next(error);
     }
