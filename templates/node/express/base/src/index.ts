@@ -4,7 +4,8 @@ import { appConfig } from './config/config';
 import { appRouter } from './app-router';
 import compression from 'compression';
 import { logger } from './utilities/logger';
-import { appEndpointLogger } from './middleware/app-endpoint-logger';
+import { appEndpointLogger } from './middleware/app-endpoint-logger.middleware';
+import { appErrorHandler } from './middleware/app-error-handler.middleware';
 
 const bootstrap = () => {
   const app = express();
@@ -40,7 +41,9 @@ const bootstrap = () => {
   app.use(appEndpointLogger);
 
   logger.info(`Initializing application routes`);
-  app.use(appRouter);
+  app.use('/api', appRouter);
+
+  app.use(appErrorHandler);
 
   app.listen(port, () => {
     logger.info(`🚀 Application running on port: ${port.toString()}`, {
