@@ -1,0 +1,24 @@
+{
+  "name": "node-typescript-base",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "start": "dotenvx run -- node dist/index.js --enable-source-maps",
+    "dev": "tsup --watch --onSuccess \"pnpm start\"",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.3",
+    "rimraf": "^6.0.1",
+    "terser": "^5.37.0",
+    "tsup": "8.3.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.32.0"
+  }
+}
